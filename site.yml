@@ -1,0 +1,70 @@
+# encoding: utf-8
+# vim: ft=ruby expandtab shiftwidth=2 tabstop=2
+
+# ======================
+# Network Settings
+# ======================
+# URLの設定
+hostname: thesixthlie.dev
+
+# ======================
+# Virtual Machine Settings
+# ======================
+memory: 2048
+
+
+# ======================
+# WordPress Settings
+# ======================
+version: 4.2.2
+lang: ja
+# サイトのタイトルを設定
+title: THE SIXTH LIE official website
+
+# ======================
+# WordPress User
+# ======================
+# wordpress管理画面のログインID,パスワード、管理者用メールアドレスを設定
+admin_user: shota
+admin_pass: 811bicky
+admin_email: reverie.1026@gmail.com
+
+# ======================
+# WordPress Database
+# ======================
+# DBのhostを設定
+db_host: 127.0.0.1
+
+# ======================
+# WordPress Default Plugins
+# Plugin's slug or url to the plugin's slug.
+# ======================
+# vccw構築時に追加しておきたいプラグイン名を入力
+plugins:
+  - dynamic-hostname
+  - tinymce-templates
+  - tinymce-advanced
+  - wp-optimize
+  - wp-fastest-cache
+  - mw-wp-form
+  - hammy
+  - advanced-custom-fields
+  - acf-field-date-time-picker
+  - all-in-one-seo-pack
+  - broken-link-checker
+  - wp-multibyte-patch
+
+# ======================
+# WordPress Default Theme
+# Theme's slug or url to the theme's .zip.
+# ======================
+# テーマファイルの設定。
+# 今回はtwentyfourteenのテーマを指定してみます。
+theme: 'thesixthlie'
+
+# ======================
+# WordPress Options
+# ======================
+# wordpress管理画面ブログの説明
+options:
+  blogdescription: Hello THE SIXTH LIE.
