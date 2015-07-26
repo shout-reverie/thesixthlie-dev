@@ -1,0 +1,568 @@
+/******************************************************************
+Site Name:
+Author:
+
+Stylesheet: Tablet & Small Desktop Stylesheet
+
+Here's where you can start getting into the good stuff.
+This size will work on iPads, other tablets, and desktops.
+So you can start working with more styles, background images,
+and other resources. You'll also notice the grid starts to
+come into play. Have fun!
+
+******************************************************************/
+
+
+
+/*********************
+GENERAL STYLES
+*********************/
+
+body {
+	overflow-x: hidden !important;
+	&::before {
+		// background: url(../images/bg1.jpg) no-repeat left top;
+		background: url(../images/bg1-pc.jpg) no-repeat left top;
+		background-size: cover;
+	}
+}
+
+#inner-content {
+	padding-top: 50px;
+	width: 95%;
+}
+#inner-content-top {
+	padding-top: 0px;
+}
+#main {
+	width: 70%;
+	article {
+		width: 90%;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	.chapter-title, .back-to {
+		width: 90%;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+}
+
+
+/*********************
+LAYOUT & GRID STYLES
+*********************/
+
+
+/*********************
+HEADER STYLES
+*********************/
+
+.header {
+	position: static;
+	top: 0px;
+	left: 0px;
+	background-color: black(0.7);
+	z-index: 5;
+}
+.top-header {
+	position: fixed;
+	background-color: transparent;
+	text-align: left;
+	top: 10px;
+	left: 10px;
+}
+
+#logo {
+		width: 200px;
+	}
+
+/*********************
+NAVIGATION STYLES
+*********************/
+
+
+.nav {
+	border: 0;
+	ul {
+		margin-top:0;
+		float: left;
+		position: relative;
+		left: 50%;
+	}
+	li {
+		float: left;
+		position: relative;
+		left: -50%;
+
+
+		a {
+			border-bottom: 0;
+			-webkit-transition: all 0.3s ease-in-out;
+
+			/*
+			you can use hover styles here even though this size
+			has the possibility of being a mobile device.
+			*/
+			&:hover, &:focus {
+				color: $white;
+				letter-spacing: 2px;
+				&::after {
+  		    transform: scaleX(1);
+  		  }
+			}
+			&::after {
+  		  content: '';
+  		  position: absolute;
+  		  bottom: 10px;
+  		  left: 0;
+  		  width: 100%;
+  		  height: 1px;
+  		  transform: scaleX(0);
+  		  background-color: $theme-color;
+  		  transition: all 0.5s ease;
+  		}
+		}
+
+		&:first-child {}
+		&:last-child {}
+
+		/*
+		plan your menus and drop-downs wisely.
+		*/
+		ul.sub-menu,
+		ul.children {
+			margin-top: 0;
+			border: 1px solid #ccc;
+			border-top: 0;
+			position: absolute;
+			visibility: hidden;
+			z-index: 8999;
+
+			li {
+
+				a {
+					padding-left: 10px;
+					border-right: 0;
+					display: block;
+					width: 180px;
+					border-bottom: 1px solid #ccc;
+
+					&:hover,
+					&:focus {}
+
+					&:link {}
+				}
+
+				&:first-child {}
+
+				&:last-child {
+
+					a {
+						border-bottom: 0;
+					}
+				}
+
+				/*
+				if you need to go deeper, go nuts
+				just remember deeper menus suck
+				for usability. k, bai.
+				*/
+				ul {
+					top:0;
+					left:100%;
+				}
+			}
+
+			/* highlight sub-menu current page */
+			li.current-menu-item,
+			li.current_page_item,
+			li.current_page_ancestor {
+				a {}
+			}
+		}
+
+		/* showing sub-menus */
+		&:hover > ul {
+			top: auto;
+			visibility:visible;
+		}
+
+	} /* end .menu ul li */
+
+	/* highlight current page */
+	li.current-menu-item,
+	li.current_page_item,
+	li.current_page_ancestor {
+		a {}
+	}  /* end current highlighters */
+
+}
+.top-nav-before {
+	ul {
+		margin-top: 25px;
+		float: left;
+		position: relative;
+		left: 0px;
+	}
+	li {
+		float: none;
+		position: relative;
+		left: 0px;
+		height: 30px;
+		a::after {
+  		content: '';
+  		position: absolute;
+  		bottom: -5px;
+  		left: 0;
+  		width: 100%;
+  		height: 1px;
+  		transform: scaleX(0);
+  		background-color: $theme-color;
+  		transition: all 0.5s ease;
+  		}
+		}
+}
+
+/* end .nav */
+
+.chapter-title {
+	padding-left: 30%;
+}
+.sidebar-title {
+	padding-left: 25%;
+}
+
+.title-circle {
+	display: table-cell;
+	width: 200px;
+	height: 200px;
+	border: dotted 2px $text-color;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 50%;
+}
+
+/*********************
+WELCOME STYLES
+*********************/
+.welcome {
+	background: url(../images/top.jpg) no-repeat left top;
+	background-size: 100% auto;
+	background-attachment: fixed;
+	display: block;
+	height: 1536px;
+	overflow: hidden;
+	section {
+		position: static;
+		height: 1536px;
+		padding-top: 768px;
+		z-index: 1;
+		opacity: 0;
+		-webkit-transition: opacity 0.6s ease-in;
+		h2 {
+			@include font-size(40);
+		}
+		.w-main {
+			@include font-size(48);
+		}
+		.w-desc {
+			@include font-size(30);
+		}
+		a>h3 {
+			display: inline-block;
+			-webkit-transition: all 0.3s;
+		}
+		a>h3:hover, a>h3:active {
+			color: $text-color;
+			background-color: $white;
+		}
+	}
+}
+
+input[type="submit"], #more>a {
+	-webkit-transition: all 0.3s;
+}
+input[type="submit"]:hover, input[type="submit"]:active, #more>a:hover, #more>a:active {
+	color: $white;
+	background-color: $text-color;
+}
+
+.something {
+	background-color: $black;
+	height: 60px;
+	width: 100%;
+}
+
+/*********************
+SIDEBARS & ASIDES
+*********************/
+
+.sidebar {
+	// width: 300px;
+	// float: right;
+}
+
+.my_calendar {
+	padding: 20px;
+}
+
+#wp-calendar {
+	width: 80%;
+	margin: 10px auto 50px;
+	text-align: center;
+}
+
+.calendar-post {
+	position: relative;
+	margin-bottom: 20px;
+	.viewmore{
+		float: right;
+	}
+	img {
+		width: 100%;
+		height: 100px;
+	}
+	a {
+		transition: all 0.3s ease-in-out;
+		position: absolute;
+		padding: 10px;
+		bottom: 6px;
+		right: 0;
+		left: 0;
+		width: 100%;
+		height: 50px;
+		z-index: 10;
+		background-color: black(0.8);
+	}
+}
+/* カレンダー comemo-theme-twenty-eleven rev.0.1 */
+#wp-calendar th, #wp-calendar tfoot td {
+    border: none;
+    background: none;
+}
+#wp-calendar td, #wp-calendar th {
+    width: 14%;
+}
+#wp-calendar td.past-day {
+		color: lighten($text-color, 8%);
+}
+#today {
+}
+#wp-calendar tbody td a, #wp-calendar tbody td a:visited {
+    background-color: $theme-color;
+    border-radius: 12px 12px 12px 12px;
+    color: $white;
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    margin: 1px;
+    vertical-align: middle;
+    width: 24px;
+}
+ 
+#wp-calendar tbody td a:hover {
+    background-color: $theme-color;
+    color: $theme-color;
+}
+
+a.calendar-post-selected {
+		height: 100px;
+}
+.calendar-post-title {
+	transition: all 0.3s ease-in-out;
+	opacity: 0;
+	margin: 0px;
+}
+
+/****** twitter **********/
+
+	.widgettitle {
+		border-bottom: 2px solid #444;
+		margin-bottom: 0.75em;
+	}
+
+	.widget {
+		padding: 0 10px;
+		margin: 2.2em 0;
+
+		ul {
+			li {
+				margin-bottom: 0.75em;
+
+				&:first-child {}
+				&:last-child {}
+				a {}
+				/* deep nesting */
+
+				ul {
+					margin-top: 0.75em;
+					padding-left: 1em;
+				}
+			}
+		}
+	}
+
+
+	/* links widget */
+	.widget_links {}
+	.widget_links ul {}
+	.widget_links ul li {}
+	.widget_links ul li a {}
+
+	/* meta widget */
+	.widget_meta {}
+	.widget_meta ul {}
+	.widget_meta ul li {}
+	.widget_meta ul li a {}
+
+	/* pages widget */
+	.widget_pages {}
+	.widget_pages ul {}
+	.widget_pages ul li {}
+	.widget_pages ul li a {}
+
+	/* recent-posts widget */
+	.widget_recent_entries {}
+	.widget_recent_entries ul {}
+	.widget_recent_entries ul li {}
+	.widget_recent_entries ul li a {}
+
+	/* archives widget */
+	.widget_archive {}
+	.widget_archive ul {}
+	.widget_archive ul li {}
+	.widget_archive ul li a {}
+	.widget_archive select {}
+	.widget_archive option {}
+
+	/* tag-cloud widget */
+	.widget_links {}
+	.widget_links li:after {}
+	.widget_links li:before {}
+	.widget_tag_cloud {}
+	.widget_tag_cloud a {}
+	.widget_tag_cloud a:after {}
+	.widget_tag_cloud a:before {}
+
+	/* calendar widget */
+	.widget_calendar {}
+	#calendar_wrap {}
+	#calendar_wrap th {}
+	#calendar_wrap td {}
+	#wp-calendar tr td {}
+	#wp-calendar caption {}
+	#wp-calendar a {}
+	#wp-calendar #today {}
+	#wp-calendar #prev {}
+	#wp-calendar #next {}
+	#wp-calendar #next a {}
+	#wp-calendar #prev a {}
+
+	/* category widget */
+	.widget_categories {}
+	.widget_categories ul {}
+	.widget_categories ul li {}
+	.widget_categories ul ul.children {}
+	.widget_categories a {}
+	.widget_categories select{}
+	.widget_categories select#cat {}
+	.widget_categories select.postform {}
+	.widget_categories option {}
+	.widget_categories .level-0 {}
+	.widget_categories .level-1 {}
+	.widget_categories .level-2 {}
+	.widget_categories .level-3 {}
+
+	/* recent-comments widget */
+	.recentcomments {}
+	#recentcomments {}
+	#recentcomments li {}
+	#recentcomments li a {}
+	.widget_recent_comments {}
+
+	/* search widget */
+	#searchform {}
+	.widget_search {}
+	.screen-reader-text {}
+
+	/* text widget */
+	.textwidget {}
+	.widget_text {}
+	.textwidget p {}
+
+/*********************
+FOLLOW ME
+*********************/
+.first-followme {
+	z-index: 10;
+	.followme {
+		z-index: 10;
+		background-color: transparent !important;
+		position: absolute;
+		top: 20px;
+		right: 70px;
+		li {
+			z-index: 10;
+			width: 100px;
+		}
+	}
+}
+.followme .sns-icon{
+	display: inline-block;
+	position: relative;
+	-webkit-perspective: 300px;
+	width: 100px;
+	span {
+		width: 100px;
+		padding: 5px 0;
+		text-align: center;
+    display: inline-block;
+    position:absolute;
+    top: 0;
+    margin-top: -20px;
+    -webkit-backface-visibility: hidden;
+    transition: all 0.8s ease-in-out;
+	}
+	.back {
+    transform:rotateY(180deg);
+    -webkit-transform:rotateY(180deg);
+    top: 5px;
+	} 
+	&:hover .front {
+    transform:rotateY(180deg);
+    -webkit-transform:rotateY(180deg);
+	}
+	&:hover .back {
+    transform:rotateY(360deg);
+    -webkit-transform:rotateY(360deg);
+	}
+}
+
+
+/*********************
+FOOTER STYLES
+*********************/
+
+/*
+you'll probably need to do quite a bit
+of overriding here if you styled them for
+mobile. Make sure to double check these!
+*/
+.footer-links {
+	ul {
+		li {
+			a {
+				&:hover {}
+			}
+			/*
+			be careful with the depth of your menus.
+			it's very rare to have multi-depth menus in
+			the footer.
+			*/
+			ul {}
+		}
+	}
+} /* end .footer-links */
+

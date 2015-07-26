@@ -14,8 +14,8 @@ node_modules
 .sass-cache
 www/wordpress/wp-admin/*
 www/wordpress/wp-includes/*
-www/wordpress/*
-!www/wordpress/wp-config.php
+www/wordpress/wp-content/themes/twentyfifteen/*
+www/wordpress/wp-content/themes/twentyfourteen/*
+www/wordpress/wp-content/themes/twentythirteen/*
 !www/wordpress/wp-content/themes/thesixthlie/*
 !www/wordpress/wp-content/uploads/*
-www/wordpress/wp-content/*
