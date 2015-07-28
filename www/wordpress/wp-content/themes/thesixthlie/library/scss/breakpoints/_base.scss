@@ -968,11 +968,14 @@ CONTACT STYLES
 			width: 0;
   		height: 0;
   		border: 10px solid transparent;
-  		border-top: 10px solid #000;
+  		border-top: 10px solid $text-color;
   		position: absolute;
   		right: 10px;
   		top: 17px;
   		z-index: -1;
+		}
+		select {
+			cursor: pointer;
 		}
 	}
 }

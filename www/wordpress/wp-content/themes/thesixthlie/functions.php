@@ -451,14 +451,60 @@ function my_get_calendar($cpt, $initial = true, $echo = true, $showNext = false)
     }
 
     $thisday = gmdate('d', current_time('timestamp'));
+
+    $next_thisyear = date('Y', strtotime(date('Y-m-1').' +1 month'));
+    $next_thismonth = date('m', strtotime(date('Y-m-1').' +1 month'));
+    $next_unixmonth = mktime(0, 0 , 0, $next_thismonth, 1, $next_thisyear);
+    $next_last_day = date('t', $next_unixmonth);
  
     $unixmonth = mktime(0, 0 , 0, $thismonth, 1, $thisyear);
     $last_day = date('t', $unixmonth);
+
+    function my_caption_month_name ($month_num) {
+      switch ($month_num) {
+        case '01':
+          return 'January';
+          break;
+        case '02':
+          return 'February';
+          break;
+        case '03':
+          return 'March';
+          break;
+        case '04':
+          return 'April';
+          break;
+        case '05':
+          return 'May';
+          break;
+        case '06':
+          return 'June';
+          break;
+        case '07':
+          return 'July';
+          break;
+        case '08':
+          return 'August';
+          break;
+        case '09':
+          return 'September';
+          break;
+        case '10':
+          return 'October';
+          break;
+        case '11':
+          return 'November';
+          break;
+        case '12':
+          return 'December';
+          break;
+        default:
+          break;
+      }
+    }
  
-    /* translators: Calendar caption: 1: month name, 2: 4-digit year */
-    $calendar_caption = _x('%1$s %2$s', 'calendar caption');
-    $calendar_output = '<table id="wp-calendar">
-    <caption>' . sprintf($calendar_caption, $wp_locale->get_month($thismonth), date('Y', $unixmonth)) . '</caption>
+    $calendar_output = '<table class="wp-calendar">
+    <caption>' . date('Y', $unixmonth).'. '.my_caption_month_name($thismonth).'</caption>
     <thead>
     <tr>';
  
@@ -558,7 +604,92 @@ function my_get_calendar($cpt, $initial = true, $echo = true, $showNext = false)
 
     if ( $ak_post_infos ) {
         foreach ( (array) $ak_post_infos as $ak_post_info ) {
-          $calendar_output .= '<div class="calendar-post cf"><img src="'.get_template_directory_uri().'/library/images/artist-img.png"><a href="'.get_permalink($ak_post_info->ID).'" data-n="'.$ak_post_info->dom.'">'.$ak_post_info->dom.'日 @ '.get_post_meta($ak_post_info->ID, 'venue')[0];
+          $calendar_output .= '<div class="calendar-post cf" data-n="'.$ak_post_info->dom.'"><span class="calendar-img" style="background-image: url(\''.get_template_directory_uri().'/library/images/artist-img.png\')"></span><a href="'.get_permalink($ak_post_info->ID).'">'.$ak_post_info->dom.'日 @ '.get_post_meta($ak_post_info->ID, 'venue')[0];
+          $calendar_output .= '<span class="viewmore">view more<i class="fa fa-angle-double-right"></i></span><p class="calendar-post-title">'.$ak_post_info->title.'</p><p>'.the_excerpt($ak_post_info->ID).'</p></a></div>';
+      }
+    }
+
+    /************* 翌月 *************/
+    $calendar_output .= '<table class="wp-calendar next-calendar">
+    <caption>' . date('Y', $next_unixmonth).'. '.my_caption_month_name($next_thismonth).'</caption>
+    <thead>
+    <tr>';
+  
+    foreach ( $myweek as $wd ) {
+        $day_name = (true == $initial) ? $wp_locale->get_weekday_initial($wd) : $wp_locale->get_weekday_abbrev($wd);
+        $wd = esc_attr($wd);
+        $calendar_output .= "\n\t\t<th scope=\"col\" title=\"$wd\">$day_name</th>";
+    }
+
+    $calendar_output .= '</tr></thead>';
+    $calendar_output .= '<tbody><tr>';
+
+    $daywithpost = array();
+    $ak_titles_for_day = array();
+    $ak_post_infos = $wpdb->get_results("SELECT ID, post_title as title, DAYOFMONTH(meta_value) as dom
+        FROM $wpdb->posts
+        INNER JOIN $wpdb->postmeta
+        ON $wpdb->posts.ID = $wpdb->postmeta.post_id
+        WHERE meta_key = 'date'
+        AND meta_value >= '{$next_thisyear}-{$next_thismonth}-01'
+        AND meta_value <= '{$next_thisyear}-{$next_thismonth}-{$last_day}'
+        AND post_type = '$cpt'
+        AND post_status = 'publish'
+        ORDER BY meta_value ASC"
+    );
+    if ( $ak_post_infos ) {
+        foreach ( (array) $ak_post_infos as $ak_post_info ) {
+
+          $daywithpost[] = $ak_post_info->dom;
+ 
+                /** This filter is documented in wp-includes/post-template.php */
+                if( $ak_post_info->title != null) {
+                  $post_title = esc_attr( apply_filters( 'the_title', $ak_post_info->post_title, $ak_post_info->ID ) );
+                } else {
+                  $post_title = '';
+                }
+
+                if ( empty($ak_titles_for_day['day_'.$ak_post_info->dom]) )
+                    $ak_titles_for_day['day_'.$ak_post_info->dom] = '';
+                if ( empty($ak_titles_for_day["$ak_post_info->dom"]) ) // first one
+                    $ak_titles_for_day["$ak_post_info->dom"] = $post_title;
+                else
+                    $ak_titles_for_day["$ak_post_info->dom"] .= $ak_title_separator . $post_title;
+        }
+    }
+ 
+    // See how much we should pad in the beginning
+    $pad = calendar_week_mod(date('w', $next_unixmonth)-$week_begins);
+    if ( 0 != $pad )
+        $calendar_output .= "\n\t\t".'<td colspan="'. esc_attr($pad) .'" class="pad">&nbsp;</td>';
+ 
+    $daysinmonth = intval(date('t', $next_unixmonth));
+    for ( $day = 1; $day <= $daysinmonth; ++$day ) {
+        if ( isset($newrow) && $newrow )
+            $calendar_output .= "\n\t</tr>\n\t<tr>\n\t\t";
+        $newrow = false;
+ 
+        $calendar_output .= '<td>';
+ 
+        if ( in_array($day, $daywithpost) ) // any posts today?
+                $calendar_output .= '<a data-n="'. $day . '">'.$day.'</a>';
+        else
+            $calendar_output .= $day;
+        $calendar_output .= '</td>';
+ 
+        if ( 6 == calendar_week_mod(date('w', mktime(0, 0 , 0, $next_thismonth, $day, $next_thisyear))-$week_begins) )
+            $newrow = true;
+    }
+ 
+    $pad = 7 - calendar_week_mod(date('w', mktime(0, 0 , 0, $next_thismonth, $day, $next_thisyear))-$week_begins);
+    if ( $pad != 0 && $pad != 7 )
+        $calendar_output .= "\n\t\t".'<td class="pad" colspan="'. esc_attr($pad) .'">&nbsp;</td>';
+ 
+    $calendar_output .= "\n\t</tr>\n\t</tbody>\n\t</table>";
+
+    if ( $ak_post_infos ) {
+        foreach ( (array) $ak_post_infos as $ak_post_info ) {
+          $calendar_output .= '<div class="calendar-post cf" data-n="'.$ak_post_info->dom.'"><span class="calendar-img" style="background-image: url(\''.get_template_directory_uri().'/library/images/artist-img.png\')"></span><a href="'.get_permalink($ak_post_info->ID).'">'.$ak_post_info->dom.'日 @ '.get_post_meta($ak_post_info->ID, 'venue')[0];
           $calendar_output .= '<span class="viewmore">view more<i class="fa fa-angle-double-right"></i></span><p class="calendar-post-title">'.$ak_post_info->title.'</p></a></div>';
       }
     }

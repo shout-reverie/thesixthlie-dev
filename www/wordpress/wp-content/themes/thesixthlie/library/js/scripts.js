@@ -43,49 +43,25 @@ var waitForFinalEvent = (function () {
 // how long to wait before deciding the resize has stopped, in ms. Around 50-100 should work ok.
 var timeToWaitForLast = 100;
 
+if( typeof is_home === "undefined" ) {
+  var is_home = jQuery('body').hasClass('home');
+}
 
-/*
- * Here's an example so you can see how we're using the above function
- *
- * This is commented out so it won't work, but you can copy it and
- * remove the comments.
- *
- *
- *
- * If we want to only do it on a certain page, we can setup checks so we do it
- * as efficient as possible.
- *
- * if( typeof is_home === "undefined" ) var is_home = $('body').hasClass('home');
- *
- * This once checks to see if you're on the home page based on the body class
- * We can then use that check to perform actions on the home page only
- *
- * When the window is resized, we perform this function
- * $(window).resize(function () {
- *
- *    // if we're on the home page, we wait the set amount (in function above) then fire the function
- *    if( is_home ) { waitForFinalEvent( function() {
- *
- *	// update the viewport, in case the window size has changed
- *	viewport = updateViewportDimensions();
- *
- *      // if we're above or equal to 768 fire this off
- *      if( viewport.width >= 768 ) {
- *        console.log('On home page and window sized to 768 width or more.');
- *      } else {
- *        // otherwise, let's do this instead
- *        console.log('Not on home page, or window sized to less than 768.');
- *      }
- *
- *    }, timeToWaitForLast, "your-function-identifier-string"); }
- * });
- *
- * Pretty cool huh? You can create functions like this to conditionally load
- * content and other stuff dependent on the viewport.
- * Remember that mobile devices and javascript aren't the best of friends.
- * Keep it light and always make sure the larger viewports are doing the heavy lifting.
- *
-*/
+jQuery(window).resize(function () {
+    // if we're on the home page, we wait the set amount (in function above) then fire the function
+    if( is_home ) { waitForFinalEvent( function() {
+	    // update the viewport, in case the window size has changed
+	    viewport = updateViewportDimensions();
+      // if we're above or equal to 768 fire this off
+      if( viewport.width >= 768 ) {
+        console.log('On home page and window sized to 768 width or more.');
+      } else {
+        // otherwise, let's do this instead
+        console.log('Not on home page, or window sized to less than 768.');
+      }
+
+    }, timeToWaitForLast, "your-function-identifier-string"); }
+ });
 
 /*
  * We're going to swap out the gravatars.
@@ -93,55 +69,16 @@ var timeToWaitForLast = 100;
  * images on mobile to save bandwidth. Once we hit an acceptable viewport
  * then we can swap out those images since they are located in a data attribute.
 */
-function loadGravatars() {
-  // set the viewport using the function above
-  viewport = updateViewportDimensions();
-  // if the viewport is tablet or larger, we load in the gravatars
-  if (viewport.width >= 768) {
-  jQuery('.comment img[data-gravatar]').each(function(){
-    jQuery(this).attr('src',jQuery(this).attr('data-gravatar'));
-  });
-	}
-} // end function
-
-function getParam() {
-  var url   = location.href;
-  if ( !url.match( /live_id/ ) ) return false;
-  var parameters    = url.split("?");
-  var str = parameters[1];
-  str = str.replace(/[&#]/g, "<>");
-  var params   = str.split("<>");
-  var paramsArray = [];
-  for ( i = 0; i < params.length; i++ ) {
-      neet = params[i].split("=");
-      paramsArray.push(neet[0]);
-      paramsArray[neet[0]] = neet[1];
-  }
-  var value = paramsArray["live_id"];
-  return value;
-}
-
-function getNowPage() {
-  var url   = location.href;
-  if ( url.match( /news/ ) ) return 'news';
-  if ( url.match( /live/ ) ) return 'live';
-  if ( url.match( /discography/ ) ) return 'discography';
-  if ( url.match( /video/ ) ) return 'video';
-  return false;
-}
-
-
-/*
- * Put all your regular jQuery in here.
-*/
-(function($) {
-
-/*
-* judge whether top page or not
-*/
-function isTop() {
-  return jQuery( "#welcome" ).size( );
-}
+// function loadGravatars() {
+//   // set the viewport using the function above
+//   viewport = updateViewportDimensions();
+//   // if the viewport is tablet or larger, we load in the gravatars
+//   if (viewport.width >= 768) {
+//   jQuery('.comment img[data-gravatar]').each(function(){
+//     jQuery(this).attr('src',jQuery(this).attr('data-gravatar'));
+//   });
+// 	}
+// } // end function
 
 /*
 *  render_map
@@ -215,17 +152,48 @@ function center_map( map ) {
   }
 }
 
+function getParam() {
+  var url   = location.href;
+  if ( !url.match( /live_id/ ) ) return false;
+  var parameters    = url.split("?");
+  var str = parameters[1];
+  str = str.replace(/[&#]/g, "<>");
+  var params   = str.split("<>");
+  var paramsArray = [];
+  for ( i = 0; i < params.length; i++ ) {
+      neet = params[i].split("=");
+      paramsArray.push(neet[0]);
+      paramsArray[neet[0]] = neet[1];
+  }
+  var value = paramsArray["live_id"];
+  return value;
+}
+
+function getNowPage() {
+  var url   = location.href;
+  if ( url.match( /news/ ) ) return 'news';
+  if ( url.match( /live/ ) ) return 'live';
+  if ( url.match( /discography/ ) ) return 'discography';
+  if ( url.match( /video/ ) ) return 'video';
+  return false;
+}
+
+
+/*
+ * Put all your regular jQuery in here.
+*/
+(function($) {
+
+
 jQuery(document).ready(function($) {
 
-  // if( !isTop() ) {
     jQuery("body").removeClass( 'fade-body' );
-  // }
 
   /*
    * Let's fire off the gravatar function
    * You can remove this if you don't need it
   */
-  loadGravatars();
+  // loadGravatars();
 
   if( getParam() ) {
     jQuery('#reserve_live_title option').each(function() {
@@ -274,69 +242,7 @@ jQuery(document).ready(function($) {
     jQuery(this).removeClass('error-view');
   });
 
-  jQuery( window ).on('scroll.topScroll', function() {
-    if( jQuery(this).scrollTop() >= 150 && isTop() ) {
-      jQuery( 'article.welcome section' ).css({
-      'opacity': '1'
-      });
-    }
-    if( jQuery(this).scrollTop() >= 384 && isTop() ) {
-      jQuery( 'article.welcome' ).css( {
-        'background-attachment': 'scroll',
-        'height': jQuery('article.welcome').width()*(768/1280) - 2
-      });
-      jQuery( 'article.welcome section' ).css( {
-        'position': 'absolute',
-        'height': '0px',
-        'padding-top': '0px',
-        'top': '384px'
-      });
-      jQuery( '.header' ).css({
-        'position': 'absolute'
-      });
-      jQuery( this ).scrollTop(0);
-      jQuery( this ).off('scroll.topScroll');
-    }
-  });
-  if( jQuery(window).scrollTop() != 0 && isTop() ) {
-      jQuery( 'article.welcome' ).css( {
-        'background-attachment': 'scroll',
-        'height': jQuery('article.welcome').width()*(768/1280) - 2
-      });
-      jQuery( 'article.welcome section' ).css( {
-        'position': 'absolute',
-        'height': '0px',
-        'padding-top': '0px',
-        'top': '384px',
-        'opacity': '1'
-      });
-      jQuery( '.header' ).css({
-        'position': 'absolute'
-      });
-      jQuery( window ).off('scroll.topScroll');
-    }
-  if( !isTop() ) {
-    jQuery( window ).off('scroll.topScroll');
-  }
-
-  jQuery('#wp-calendar tbody td a').hover(
-    function(){
-      var post_number = jQuery(this).data('n');
-      jQuery('.calendar-post a[data-n=' + post_number + ']').addClass('calendar-post-selected');
-      jQuery('.calendar-post-title').css('opacity', '1');
-    },
-    function(){
-      var post_number = jQuery(this).data('n');
-      jQuery('.calendar-post a[data-n=' + post_number + ']').removeClass('calendar-post-selected');
-      jQuery('.calendar-post-title').css('opacity', '0');
-    });
-
-
 }); /* end of as page load scripts */
-
-// jQuery(".welcome-load-img").bind('load', function() {
-//   jQuery("body").removeClass( 'fade-body' );
-// });
 
 /********** ajax ***************/
 var now_post_num = 5; // 現在表示されている数
@@ -371,4 +277,8 @@ jQuery("#more a").live("click", function() {
 });
 
 })(jQuery);
+
+jQuery(".welcome-load-img").bind('load', function() {
+  jQuery("body").removeClass( 'fade-body' );
+});
 

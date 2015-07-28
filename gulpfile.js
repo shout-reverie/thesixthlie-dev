@@ -61,6 +61,6 @@ gulp.task('bs-reload', function () {
 // /scss/*.scss を監視し、変更があったら Sass タスクを実行
 gulp.task('watch', ['browser-sync', 'sass'], function () {
     gulp.watch(dir.theme + '/library/scss/**/*.scss', ['sass']);
-    gulp.watch(dir.theme + '/library/js/**/*.js');
+    gulp.watch(dir.theme + '/library/js/*.js', ['bs-reload']);
     gulp.watch(dir.theme + '/*.php', ['bs-reload']);
 });

@@ -25,7 +25,7 @@
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'cf' ); ?> role="article">
 								<section class="entry-content cf">
 									<div class="video-container"><?php the_field('video_link'); ?></div>
-									<h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+									<h2 class="entry-title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 									<?php the_content(); ?>
 									<a href="<?php the_permalink() ?>" class="view-lyrics">view lyrics<i class="fa fa-angle-double-right"></i></a>
 								</section>

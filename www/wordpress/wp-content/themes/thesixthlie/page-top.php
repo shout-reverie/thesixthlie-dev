@@ -21,7 +21,7 @@
       <?php endif ?> 
         <?php if(have_posts()) : while (have_posts()) : the_post(); ?>
           <section>
-            <h2 class="h2"><?php the_field('welcome_title'); ?></h2>
+            <h2 class="h2 w-title"><?php the_field('welcome_title'); ?></h2>
             <?php if(get_field('welcome_link') != null) { ?>
               <a href="<?php the_field('welcome_link') ?>"><h3 class="h2 w-main"><?php the_field('welcome_main'); ?></h3></a>
             <?php } else { ?>
@@ -30,6 +30,7 @@
             <p class="h4 w-desc"><?php the_field('welcome_description'); ?></p>
             <!-- <p class="more">view more</p> -->
           </section>
+          <div class="plz-scroll"><i class="fa fa-arrow-circle-o-down fa-4x"></i></div>
         <?php endwhile; endif; ?>
       </article>
       <div class="first-followme cf"><?php get_template_part('followme'); endif;?></div>

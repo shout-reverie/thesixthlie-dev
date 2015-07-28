@@ -26,7 +26,7 @@
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'cf' ); ?> role="article">
 								<section class="entry-content cf">
 									<div class="discography-img"><?php the_post_thumbnail(); ?></div>
-									<h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+									<h2 class="entry-title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 									<p class="release-date"><?php echo my_date( get_field('date') );?></p>
 									<p><?php $songs = my_songs( get_field('songs') );
 									foreach ($songs as $key => $song) { $num = $key + 1; echo $num.',　'.$song; } ?></p>

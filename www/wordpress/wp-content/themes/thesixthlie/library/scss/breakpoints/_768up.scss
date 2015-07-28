@@ -67,7 +67,7 @@ HEADER STYLES
 	z-index: 5;
 }
 .top-header {
-	position: fixed;
+	position: absolute;
 	background-color: transparent;
 	text-align: left;
 	top: 10px;
@@ -250,25 +250,31 @@ WELCOME STYLES
 .welcome {
 	background: url(../images/top.jpg) no-repeat left top;
 	background-size: 100% auto;
-	background-attachment: fixed;
-	display: block;
-	height: 1536px;
-	overflow: hidden;
+	background-attachment: scroll;
 	section {
-		position: static;
-		height: 1536px;
-		padding-top: 768px;
-		z-index: 1;
-		opacity: 0;
-		-webkit-transition: opacity 0.6s ease-in;
-		h2 {
+		font-family: Consolas, monospace;
+		.w-title {
 			@include font-size(40);
+			opacity: 0;
+			span {
+				opacity: 0;
+			}
 		}
 		.w-main {
 			@include font-size(48);
+			opacity: 0;
+			border-color: transparent;
+			transition: border-color 0.8s ease-in;
+			span {
+				opacity: 0;
+			}
 		}
 		.w-desc {
 			@include font-size(30);
+			opacity: 0;
+			span {
+				opacity: 0;
+			}
 		}
 		a>h3 {
 			display: inline-block;
@@ -280,6 +286,25 @@ WELCOME STYLES
 		}
 	}
 }
+
+.plz-scroll {
+	position: absolute;
+	bottom: 50px;
+	left: 0;
+	right: 0;
+	width: 60px;
+	height: 60px;
+	margin: auto;
+	color: $white;
+	cursor: pointer;
+	transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  &:hover {
+  	transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+
 
 input[type="submit"], #more>a {
 	-webkit-transition: all 0.3s;
@@ -295,6 +320,27 @@ input[type="submit"]:hover, input[type="submit"]:active, #more>a:hover, #more>a:
 	width: 100%;
 }
 
+.entry-title, .live-title {
+	margin: 5px 0 !important;
+	a {
+		@include font-size(24);
+		padding: 3px 0px;
+		transition: all 0.3s ease-in-out;
+		&:hover, &:active {
+			color: $white;
+			background-color: $link-color;
+			border-radius: 6px;
+		}
+	}
+}
+
+#post-not-found {
+	section.entry-content p {
+		margin: 2rem;
+		@include font-size(16);
+	} 
+}
+
 /*********************
 SIDEBARS & ASIDES
 *********************/
@@ -308,49 +354,63 @@ SIDEBARS & ASIDES
 	padding: 20px;
 }
 
-#wp-calendar {
+.wp-calendar {
 	width: 80%;
-	margin: 10px auto 50px;
+	margin: 30px auto 20px;
 	text-align: center;
+	caption {
+		@include font-size(20);
+		margin-bottom: 1rem;
+	}
+}
+.next-calendar {
+	margin-top: 50px;
 }
 
 .calendar-post {
 	position: relative;
 	margin-bottom: 20px;
+	text-align: center;
 	.viewmore{
 		float: right;
 	}
-	img {
-		width: 100%;
+	span.calendar-img {
+		width: 80%;
 		height: 100px;
+		background-size: cover;
+		background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
 	}
 	a {
 		transition: all 0.3s ease-in-out;
 		position: absolute;
-		padding: 10px;
 		bottom: 6px;
 		right: 0;
 		left: 0;
-		width: 100%;
-		height: 50px;
+		width: 80%;
+		height: 35px;
 		z-index: 10;
 		background-color: black(0.8);
+		margin: auto;
+		text-align: left;
+		padding: 5px;
 	}
 }
 /* カレンダー comemo-theme-twenty-eleven rev.0.1 */
-#wp-calendar th, #wp-calendar tfoot td {
+.wp-calendar th, .wp-calendar tfoot td {
     border: none;
     background: none;
 }
-#wp-calendar td, #wp-calendar th {
+.wp-calendar td, .wp-calendar th {
     width: 14%;
 }
-#wp-calendar td.past-day {
+.wp-calendar td.past-day {
 		color: lighten($text-color, 8%);
 }
 #today {
 }
-#wp-calendar tbody td a, #wp-calendar tbody td a:visited {
+.wp-calendar tbody td a, .wp-calendar tbody td a:visited {
     background-color: $theme-color;
     border-radius: 12px 12px 12px 12px;
     color: $white;
@@ -362,13 +422,18 @@ SIDEBARS & ASIDES
     width: 24px;
 }
  
-#wp-calendar tbody td a:hover {
+.wp-calendar tbody td a:hover {
     background-color: $theme-color;
     color: $theme-color;
 }
 
-a.calendar-post-selected {
+.calendar-post-selected {
+		a {			
 		height: 100px;
+		}
+		p.calendar-post-title {
+			opacity: 1;
+		}
 }
 .calendar-post-title {
 	transition: all 0.3s ease-in-out;
@@ -451,14 +516,14 @@ a.calendar-post-selected {
 	#calendar_wrap {}
 	#calendar_wrap th {}
 	#calendar_wrap td {}
-	#wp-calendar tr td {}
-	#wp-calendar caption {}
-	#wp-calendar a {}
-	#wp-calendar #today {}
-	#wp-calendar #prev {}
-	#wp-calendar #next {}
-	#wp-calendar #next a {}
-	#wp-calendar #prev a {}
+	.wp-calendar tr td {}
+	.wp-calendar caption {}
+	.wp-calendar a {}
+	.wp-calendar #today {}
+	.wp-calendar #prev {}
+	.wp-calendar #next {}
+	.wp-calendar #next a {}
+	.wp-calendar #prev a {}
 
 	/* category widget */
 	.widget_categories {}

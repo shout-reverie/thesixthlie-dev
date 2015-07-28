@@ -4,7 +4,7 @@
 					<div class="my_calender"><?php my_get_calendar('live'); ?></div>
 
 					<h2 class="chapter-title sidebar-title"><span class="title-circle">TWITTER</span></h2>
-					<a class="twitter-timeline" data-chrome="noheader nofooter transparent" data-border-color="#2f2f2f" href="https://twitter.com/2wink_te" height="300px" data-widget-id="624001920542248960">@2wink_teさんのツイート</a>
+          <a class="twitter-timeline" href="https://twitter.com/TheSixthLie" data-widget-id="625353101877219328" data-chrome="noheader nofooter transparent" data-border-color="#2f2f2f" height="300px">@TheSixthLieさんのツイート</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 
