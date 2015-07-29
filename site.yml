@@ -32,6 +32,7 @@ admin_email: reverie.1026@gmail.com
 # ======================
 # WordPress Database
 # ======================
+db_prefix: wp6_
 # DBのhostを設定
 db_host: 127.0.0.1
 
