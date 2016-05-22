@@ -19,12 +19,15 @@
 
 								<section class="entry-content cf" itemprop="articleBody">
 
+								<?php if( !(is_page() && $post->post_parent) ) : ?>
+								<p class="reserve-here"><a href="<?php echo get_permalink( 94 ); ?>">liveの予約はこちらから<i class="fa fa-angle-double-right"></i></a></p>
+								<?php endif ?>
+
 									<?php the_content(); ?>
 
-								<?php if( !(is_page() && $post->post_parent) ) : ?>
-								<p class="reserve-here"><a href="<?php echo home_url().'/contact/reservation'; ?>">liveの予約はこちらから<i class="fa fa-angle-double-right"></i></a></p>
+								
 
-							<?php endif ?>
+							
 
 								</section> <?php // end article section ?>
 

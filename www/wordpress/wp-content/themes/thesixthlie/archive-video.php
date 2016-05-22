@@ -35,7 +35,7 @@
 
 							<?php endwhile; ?>
 
-							<?php if ($num >= 5) { ?><p id="more"><a href="#">LOAD MORE</a></p><?php } ?>
+							<?php if ($num >= 7) { ?><p id="more"><a href="#">LOAD MORE</a></p><?php } ?>
 
 							<?php else : ?>
 									<article id="post-not-found" class="hentry cf">

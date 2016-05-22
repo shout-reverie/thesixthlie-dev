@@ -1,21 +1,21 @@
 local:
-  vhost: "http://vccw.dev"
+  vhost: "http://thesixthlie.dev"
   wordpress_path: "/var/www/wordpress"
 
   database:
     name: "wordpress"
     user: "wordpress"
     password: "wordpress"
-    host: "localhost"
+    host: "127.0.0.1"
 
 staging:
-  vhost: "http://example.com"
-  wordpress_path: "/var/www/your_site" # use an absolute path here
+  vhost: "http://thesixthlie.jp"
+  wordpress_path: "/public_html"
 
   database:
-    name: "database_name"
-    user: "user"
-    password: "password"
+    name: "sixthlie_wp6"
+    user: "sixthlie_user"
+    password: "Gunma014"
     host: "localhost"
     charset: "utf8"
 
@@ -49,11 +49,11 @@ staging:
   #     user: "user"
   #     password: "password" # password is optional, will use public keys if available.
 
-  # ftp:
-  #   user: "user"
-  #   password: "password"
-  #   host: "host"
-  #   passive: true
+  ftp:
+    user: "shout-reverie@sixthlie.rakusaba.jp"
+    password: "bicky0811"
+    host: "sixthlie.rakusaba.jp"
+    passive: true
 
 # production: # multiple environments can be specified
 #   [...]

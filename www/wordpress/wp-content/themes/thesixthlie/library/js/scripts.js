@@ -187,7 +187,9 @@ function getNowPage() {
 
 jQuery(document).ready(function($) {
 
-    jQuery("body").removeClass( 'fade-body' );
+    if( !is_home ) {
+      jQuery("body").removeClass( 'fade-body' );
+    }
 
   /*
    * Let's fire off the gravatar function
@@ -229,6 +231,11 @@ jQuery(document).ready(function($) {
     preventDefaultEvents: false
   });
 
+  jQuery( '.mobile-menu-trigger' ).on( 'touchstart', function(){
+    event.preventDefault();
+    jQuery.sidr('close', 'sidr');
+  })
+
   /**** for display google map ****/
   jQuery('.acf-map').each(function(){
     render_map( jQuery(this) );
@@ -245,10 +252,11 @@ jQuery(document).ready(function($) {
 }); /* end of as page load scripts */
 
 /********** ajax ***************/
-var now_post_num = 5; // 現在表示されている数
-var get_post_num = 5; // もっと読むボタンを押した時に取得する数
+var now_post_num = 7; // 現在表示されている数
+var get_post_num = 7; // もっと読むボタンを押した時に取得する数
 
-jQuery("#more a").live("click", function() {    
+jQuery("#more a").live("click", function() {
+  console.log( getNowPage() );
   jQuery("#more").html('<div class="sk-circle"><div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div><div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div><div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div><div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div><div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div><div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div></div>');
   jQuery.ajax({
       type: 'post',
@@ -261,7 +269,7 @@ jQuery("#more a").live("click", function() {
       success: function(data) {
           now_post_num = now_post_num + get_post_num;
           data = JSON.parse(data);
-          jQuery("#main").append(data['html']);
+          if (data['html']) jQuery("#main").append(data['html']);
           jQuery("#more").remove();
           if (!data['noDataFlg']) {
               jQuery("#main").append('<p id="more"><a href="#">LOAD MORE</a></p>');

@@ -30,11 +30,15 @@
             <p class="h4 w-desc"><?php the_field('welcome_description'); ?></p>
             <!-- <p class="more">view more</p> -->
           </section>
-          <div class="plz-scroll"><i class="fa fa-arrow-circle-o-down fa-4x"></i></div>
+          <?php if(!is_mobile()) : ?>
+            <div class="plz-scroll"><i class="fa fa-arrow-circle-o-down fa-4x"></i></div>
+          <? endif ?>
         <?php endwhile; endif; ?>
       </article>
       <div class="first-followme cf"><?php get_template_part('followme'); endif;?></div>
+          <?php if(!is_mobile()) : ?>
       <div class="something"></div>
+          <? endif ?>
 <div id="content">
   <div id="inner-content inner-content-top" class="wrap cf">
 
@@ -80,7 +84,8 @@
                   <span class='post-type-wrapper'><?php  echo $post_type ?></span>
               </header>
               <section class="cf entry-content" itemprop="articleBody">
-                  <h3 class="entry-title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h3>
+                  <h3 class="entry-title"><a href="<?php the_permalink() ?>"><?php if($post_type === 'live') {
+                    echo my_date( get_field('date') ).get_title(); } else { the_title(); } ?></a></h3>
                   <?php the_excerpt(); ?>
               </section>
             </article>

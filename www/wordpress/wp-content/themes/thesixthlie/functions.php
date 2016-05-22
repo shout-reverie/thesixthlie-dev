@@ -311,13 +311,22 @@ function my_songs($src) {
 
 /************* SORT LIVE EVENT ON LIVE PAGE *************/
 function live_schedule_posts($query) {
-  if (is_admin() || ! $query->is_main_query())
-      return;
+  if (is_admin() || ! $query->is_main_query()) return;
+  $currnet_date = date_i18n( 'Y-m-d-D' );
   if ($query->is_post_type_archive('live')) {
-    $query->set( 'posts_per_page', 5 );
+    $query->set( 'posts_per_page', 7 );
     $query->set( 'orderby', 'meta_value' );
     $query->set( 'meta_key', 'date' );
     $query->set( 'order', 'DESC' );
+    $query->set( 'meta_query', array(
+                                array(
+                                    'key' => 'date',
+                                    'value' => $currnet_date,
+                                    'compare' => '>=',
+                                    'type' => 'DATE'
+                                )
+                              )
+    );
   }
 }
 add_action('pre_get_posts', 'live_schedule_posts');
@@ -329,6 +338,7 @@ function my_auto_title($title_message){
     return $title_message;
   } else if( $post->post_type == 'live' && $title_message == null ){
     $date = get_field('date', $post->ID);
+
     $date = new DateTime($date);
     $date = $date->format('m.d');
     $venue = get_field('venue', $post->ID);
@@ -368,10 +378,7 @@ function add_live( $children, $atts ) {
         foreach ( $lives as $live ) {
           $live_id = $live->ID;
           if ( get_field('reserve', $live_id) ) {
-            $live_title = $live->post_title;
-            if ( $live_title == null ) {
-              $live_title = get_field('date', $live_id).'@'.get_field('venue', $live_id);
-            }
+            $live_title = my_live_date(get_field('date', $live_id)).':  '.$live->post_title;
             $children[$live_id] = $live_title;
           }
         }
@@ -452,8 +459,8 @@ function my_get_calendar($cpt, $initial = true, $echo = true, $showNext = false)
 
     $thisday = gmdate('d', current_time('timestamp'));
 
-    $next_thisyear = date('Y', strtotime(date('Y-m-1').' +1 month'));
-    $next_thismonth = date('m', strtotime(date('Y-m-1').' +1 month'));
+    $next_thisyear = date('Y', strtotime(date('Y-m-01').' +1 month'));
+    $next_thismonth = date('m', strtotime(date('Y-m-01').' +1 month'));
     $next_unixmonth = mktime(0, 0 , 0, $next_thismonth, 1, $next_thisyear);
     $next_last_day = date('t', $next_unixmonth);
  
@@ -604,7 +611,13 @@ function my_get_calendar($cpt, $initial = true, $echo = true, $showNext = false)
 
     if ( $ak_post_infos ) {
         foreach ( (array) $ak_post_infos as $ak_post_info ) {
-          $calendar_output .= '<div class="calendar-post cf" data-n="'.$ak_post_info->dom.'"><span class="calendar-img" style="background-image: url(\''.get_template_directory_uri().'/library/images/artist-img.png\')"></span><a href="'.get_permalink($ak_post_info->ID).'">'.$ak_post_info->dom.'日 @ '.get_post_meta($ak_post_info->ID, 'venue')[0];
+          $calendar_output .= '<div class="calendar-post cf" data-n="'.$ak_post_info->dom.'">';
+          if( has_post_thumbnail( $ak_post_info->ID ) ){
+            $calendar_output .= '<span class="calendar-img" style="background-image: wp_get_attachment_image_src( get_post_thumbnail_id( $ak_post_info->ID ), 'thumb-300' );"></span>';
+          } else {
+            $calendar_output .= '<span class="calendar-img" style="background-image: url(\''.get_template_directory_uri().'/library/images/cal-img.png\')"></span>';
+          }
+          $calendar_output .= '<a href="'.get_permalink($ak_post_info->ID).'">'.$ak_post_info->dom.'日 @ '.get_post_meta($ak_post_info->ID, 'venue')[0];
           $calendar_output .= '<span class="viewmore">view more<i class="fa fa-angle-double-right"></i></span><p class="calendar-post-title">'.$ak_post_info->title.'</p><p>'.the_excerpt($ak_post_info->ID).'</p></a></div>';
       }
     }
@@ -672,7 +685,7 @@ function my_get_calendar($cpt, $initial = true, $echo = true, $showNext = false)
         $calendar_output .= '<td>';
  
         if ( in_array($day, $daywithpost) ) // any posts today?
-                $calendar_output .= '<a data-n="'. $day . '">'.$day.'</a>';
+                $calendar_output .= '<a data-n="n'. $day . '">'.$day.'</a>';
         else
             $calendar_output .= $day;
         $calendar_output .= '</td>';
@@ -689,7 +702,7 @@ function my_get_calendar($cpt, $initial = true, $echo = true, $showNext = false)
 
     if ( $ak_post_infos ) {
         foreach ( (array) $ak_post_infos as $ak_post_info ) {
-          $calendar_output .= '<div class="calendar-post cf" data-n="'.$ak_post_info->dom.'"><span class="calendar-img" style="background-image: url(\''.get_template_directory_uri().'/library/images/artist-img.png\')"></span><a href="'.get_permalink($ak_post_info->ID).'">'.$ak_post_info->dom.'日 @ '.get_post_meta($ak_post_info->ID, 'venue')[0];
+          $calendar_output .= '<div class="calendar-post cf" data-n="n'.$ak_post_info->dom.'"><span class="calendar-img" style="background-image: url(\''.get_template_directory_uri().'/library/images/artist-img.png\')"></span><a href="'.get_permalink($ak_post_info->ID).'">'.$ak_post_info->dom.'日 @ '.get_post_meta($ak_post_info->ID, 'venue')[0];
           $calendar_output .= '<span class="viewmore">view more<i class="fa fa-angle-double-right"></i></span><p class="calendar-post-title">'.$ak_post_info->title.'</p></a></div>';
       }
     }

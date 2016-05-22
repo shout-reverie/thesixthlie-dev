@@ -19,12 +19,12 @@ GENERAL STYLES
 *********************/
 
 body {
-	overflow-x: hidden !important;
 	&::before {
 		// background: url(../images/bg1.jpg) no-repeat left top;
-		background: url(../images/bg1-pc.jpg) no-repeat left top;
+		background: url(../images/bg1-pc.png) no-repeat left top;
 		background-size: cover;
 	}
+	color: $text-pc-color;
 }
 
 #inner-content {
@@ -35,7 +35,7 @@ body {
 	padding-top: 0px;
 }
 #main {
-	width: 70%;
+	// width: 70%;
 	article {
 		width: 90%;
 		margin-right: auto;
@@ -46,7 +46,42 @@ body {
 		margin-right: auto;
 		margin-left: auto;
 	}
+	.chapter-title, .chapter-content, .entry-content {
+		color: $text-pc-color
+	}
+	.chapter-title, .title-circle {
+		border-color: $border-pc-color;
+	}
+	input, input:active, input:focus, textarea, textarea:active, textarea:focus, select, select:active, select:focus {
+		border-color: $border-pc-color;
+		color: $text-pc-color;
+		&::-webkit-input-placeholder {
+			color: $placeholder-color;
+		}
+		&:-ms-input-placeholder {
+			color: $placeholder-color;
+		}
+		&::-moz-placeholder {
+			color: $placeholder-color;
+		}
+	}
+	.hentry {
+		border-color: $border-pc-color;
+	}
+	table, tr, td, th {
+		border-color: $border-pc-color;
+	}
+}
+#more a, #more a:active, #more a:hover, #more a:link, #more a:visited {
+    color: $text-pc-color;
+    border-color: $border-pc-color;
+}
 
+.topnews .entry-content img {
+	width: 40%;
+}
+.news-thumb-wrapper {
+	text-align: center;
 }
 
 
@@ -78,6 +113,10 @@ HEADER STYLES
 		width: 200px;
 	}
 
+.acf-map {
+	height: 400px;
+}
+
 /*********************
 NAVIGATION STYLES
 *********************/
@@ -89,12 +128,13 @@ NAVIGATION STYLES
 		margin-top:0;
 		float: left;
 		position: relative;
-		left: 50%;
+		left: 12%;
+		
 	}
 	li {
 		float: left;
 		position: relative;
-		left: -50%;
+		
 
 
 		a {
@@ -210,7 +250,11 @@ NAVIGATION STYLES
 		float: none;
 		position: relative;
 		left: 0px;
-		height: 30px;
+		height: 15px;
+		a {
+			padding-top: 0px;
+			margin-top: .75em;
+		}
 		a::after {
   		content: '';
   		position: absolute;
@@ -228,10 +272,10 @@ NAVIGATION STYLES
 /* end .nav */
 
 .chapter-title {
-	padding-left: 34%;
+	padding-left: 25%;
 }
 .sidebar-title {
-	padding-left: 25%;
+	padding-left: 10%;
 }
 
 .title-circle {
@@ -248,20 +292,23 @@ NAVIGATION STYLES
 WELCOME STYLES
 *********************/
 .welcome {
-	background: url(../images/top.jpg) no-repeat left top;
+	background: url(../images/top.png) no-repeat left top;
 	background-size: 100% auto;
 	background-attachment: scroll;
+	z-index: 0;
 	section {
 		font-family: Consolas, monospace;
 		.w-title {
-			@include font-size(40);
+			margin: 0;
+			@include font-size(32);
 			opacity: 0;
 			span {
 				opacity: 0;
 			}
 		}
 		.w-main {
-			@include font-size(48);
+			margin: 10px 0;
+			@include font-size(38);
 			opacity: 0;
 			border-color: transparent;
 			transition: border-color 0.8s ease-in;
@@ -270,7 +317,8 @@ WELCOME STYLES
 			}
 		}
 		.w-desc {
-			@include font-size(30);
+			@include font-size(24);
+			line-height: 26px;
 			opacity: 0;
 			span {
 				opacity: 0;
@@ -334,6 +382,29 @@ input[type="submit"]:hover, input[type="submit"]:active, #more>a:hover, #more>a:
 	}
 }
 
+.live-list .live-info-img img {
+	width: 50%;
+}
+.discography .discography-img img {
+	width: 50%;
+}
+.video section .entry-title {
+	margin-top: 2.5rem !important;
+}
+.artist-img-wrapper {
+	text-align: center;
+	.artist-img {
+		width: 70%;
+	}
+}
+.biography, .topnews {
+	color: $text-pc-color;
+}
+.post-type-wrapper {
+	color: $sidebar-color;
+	border-color: $sidebar-color;
+}
+
 #post-not-found {
 	section.entry-content p {
 		margin: 2rem;
@@ -348,6 +419,11 @@ SIDEBARS & ASIDES
 .sidebar {
 	// width: 300px;
 	// float: right;
+	color: $sidebar_color;
+	.chapter-title, .title-circle {
+		border-color: $sidebar_color !important;
+		color: $sidebar_color;
+	}
 }
 
 .my_calendar {
@@ -378,7 +454,7 @@ SIDEBARS & ASIDES
 		width: 80%;
 		height: 100px;
 		background-size: cover;
-		background-position: center center;
+		background-position: top center;
     background-repeat: no-repeat;
     display: inline-block;
 	}
@@ -406,7 +482,7 @@ SIDEBARS & ASIDES
     width: 14%;
 }
 .wp-calendar td.past-day {
-		color: lighten($text-color, 8%);
+		color: $text-color;
 }
 #today {
 }
@@ -578,6 +654,9 @@ FOLLOW ME
 	display: inline-block;
 	position: relative;
 	-webkit-perspective: 300px;
+	-moz-perspective: 300px;
+	-o-perspective: 300px;
+	-ms-perspective: 300px;
 	width: 100px;
 	span {
 		width: 100px;
@@ -588,20 +667,32 @@ FOLLOW ME
     top: 0;
     margin-top: -20px;
     -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
     transition: all 0.8s ease-in-out;
 	}
 	.back {
     transform:rotateY(180deg);
     -webkit-transform:rotateY(180deg);
+    -moz-transform:rotateY(180deg);
+    -o-transform:rotateY(180deg);
+    -ms-transform:rotateY(180deg);
     top: 5px;
 	} 
 	&:hover .front {
     transform:rotateY(180deg);
     -webkit-transform:rotateY(180deg);
+    -moz-transform:rotateY(180deg);
+    -o-transform:rotateY(180deg);
+    -ms-transform:rotateY(180deg);
 	}
 	&:hover .back {
     transform:rotateY(360deg);
     -webkit-transform:rotateY(360deg);
+    -moz-transform:rotateY(360deg);
+    -o-transform:rotateY(360deg);
+    -ms-transform:rotateY(360deg);
 	}
 }
 

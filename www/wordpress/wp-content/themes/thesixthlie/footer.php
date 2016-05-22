@@ -37,7 +37,7 @@
 		<?php // all js scripts are loaded in library/bones.php ?>
 		<?php wp_footer(); ?>
         <?php if(!is_mobile()) : ?>
-            <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri().'/library/js/script-pc.js'; ?>">
+            <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri().'/library/js/script-pc.js'; ?>"></script>
         <?php endif ?>
     <?php // google map ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>

@@ -21,6 +21,7 @@ html {
 }
 
 body {
+	overflow-x: hidden !important;
 	height: 100%;
 	font-family: $lato;
 	font-size: 16px;
@@ -37,7 +38,7 @@ body {
   	opacity: 0;
   }
   &::before {
-  	background: url(../images/bg1-mobile.jpg) no-repeat left top;
+  	background: url(../images/bg1-mobile.png) no-repeat left top;
   	background-size: 100% auto;
   	display: block;
   	position: fixed;
@@ -203,6 +204,7 @@ HEADER STYLES
 	text-align: center;
 	&#inner-header {
 		position: relative;
+		padding-top: 2px;
 	}
 }
 #logo {
@@ -676,6 +678,10 @@ POSTS & CONTENT STYLES
 	}
 }
 
+.news-title {
+	margin: 0.6rem 0 1rem 0.6rem !important;
+}
+
 /*********************
 TOP PAGE STYLES
 *********************/
@@ -684,6 +690,10 @@ TOP PAGE STYLES
 		@include font-size(22);
 		text-align: center;
 		margin: 1rem 0 0 0;
+	}
+	section img {
+		width: 100%;
+		height: auto;
 	}
 }
 
@@ -750,7 +760,10 @@ LIVE PAGE STYLES
 	}
 	.live-title {
 		@include font-size(18);
-		line-height: 3rem;
+		//line-height: 3rem;
+		td {
+			padding-bottom: 1.3rem;
+		}
 	}
 	.live-info {
 		padding-left : 0.5rem;
@@ -787,11 +800,15 @@ LIVE PAGE STYLES
 		border: solid 1px $text-color;
 		border-radius: 6px;
 	}
+	a:hover {
+		color: $white;
+		background-color: $text-color;
+	} 
 }
 .reserve-here {
 	@include font-size(16);
 	margin-top: 1rem !important;
-	text-align: right;
+	text-align: center;
 	i {
 		padding-left: 0.2rem;
 	}
@@ -954,14 +971,14 @@ CONTACT STYLES
 			padding-top: 0.2rem;
 		}
 		input:focus, textarea:focus, select:focus {
-			box-shadow: 0px 0px 4px $focus-color;
+			box-shadow: 0px 0px 8px $focus-color;
 			border-color: $focus-color;
 		}
 		input[type="submit"] {
 			padding: 1rem;
 		}
 		.error-view {
-			box-shadow: 0px 0px 4px $error-color;
+			box-shadow: 0px 0px 8px $error-color;
 			border-color:  $error-color;
 		}
 		.select-triangle {

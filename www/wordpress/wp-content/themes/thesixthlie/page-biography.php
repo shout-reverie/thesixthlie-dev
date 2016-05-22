@@ -18,7 +18,7 @@
 
 							<?php $image = get_field('artist_img');
 							if( !empty($image) ): ?>
-								<img class="artist-img" src="<?php echo $image['url'];?>" alt="<?php echo $image['alt']; ?>" />
+								<div class="artist-img-wrapper"><img class="artist-img" src="<?php echo $image['url'];?>" alt="<?php echo $image['alt']; ?>" /></div>
 							<?php endif; ?>
 
 							<article id="post-<?php the_ID(); ?>" class="wrap" role="article" itemscope itemtype="http://schema.org/BlogPosting">

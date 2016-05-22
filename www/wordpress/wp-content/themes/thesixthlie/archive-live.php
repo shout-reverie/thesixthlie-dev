@@ -50,7 +50,7 @@
 											</tr><?php } ?>
 										</tbody>
 									</table>
-									<div class="live-info-img"><?php the_post_thumbnail(); ?></div>
+									<div class="live-info-img"><?php the_post_thumbnail('thumb-600'); ?></div>
 									<?php the_content(); ?>
 									<p class="viewmore"><a href="<?php the_permalink() ?>">view more<i class="fa fa-angle-double-right"></i></a></p>
 								</section>
@@ -60,7 +60,7 @@
 
 							<?php endwhile; ?>
 
-							<?php if ($num >= 5) : ?><p id="more"><a href="#">LOAD MORE</a></p><?php endif ?>
+							<?php if ($num >= 7) : ?><p id="more"><a href="#">LOAD MORE</a></p><?php endif ?>
 
 							<?php else : ?>
 

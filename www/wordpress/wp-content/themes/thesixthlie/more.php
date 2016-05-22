@@ -188,7 +188,7 @@
             WHERE 
                 $wpdb->posts.post_type = 'live' AND $wpdb->posts.post_status = 'publish' AND $wpdb->postmeta.meta_key = 'date'
             ORDER BY 
-                $wpdb->postmeta.meta_value DESC 
+                $wpdb->postmeta.meta_value ASC 
             LIMIT $now_post_num, $get_post_num";
                   
         $results = $wpdb->get_results($sql);

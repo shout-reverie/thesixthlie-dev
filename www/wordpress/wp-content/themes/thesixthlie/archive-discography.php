@@ -25,11 +25,10 @@
 						<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'cf' ); ?> role="article">
 								<section class="entry-content cf">
-									<div class="discography-img"><?php the_post_thumbnail(); ?></div>
+									<div class="discography-img"><?php the_post_thumbnail('thumb-600'); ?></div>
 									<h2 class="entry-title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 									<p class="release-date"><?php echo my_date( get_field('date') );?></p>
-									<p><?php $songs = my_songs( get_field('songs') );
-									foreach ($songs as $key => $song) { $num = $key + 1; echo $num.',　'.$song; } ?></p>
+									<p><?php the_field('songs'); ?></p>
 									<?php the_content(); ?>
 								</section>
 							</article>
@@ -54,7 +53,7 @@
 
 							<?php endif; ?>
 
-							<?php if ($num >= 5) { ?><p id="more"><a href="#">LOAD MORE</a></p><?php } ?>
+							<?php if ($num >= 7) { ?><p id="more"><a href="#">LOAD MORE</a></p><?php } ?>
 
 						</main>
 

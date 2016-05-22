@@ -168,29 +168,29 @@ add_action( 'init', 'custom_post_video');
 add_action( 'init', 'custom_post_discography');
 
 // use number instead of post title for permanent link
-add_filter( 'post_type_link', 'my_post_type_link', 1, 2 );
-function my_post_type_link( $link, $post ){
-	if ( 'live' === $post->post_type ) {
-		return home_url( '/live/' . $post->ID );
-	} else if ( 'video' === $post->post_type ) {
-		return home_url( '/video/' . $post->ID );
-	} else if ( 'discography' === $post->post_type ) {
-		return home_url( '/discography/' . $post->ID );
-	} else {
-		return $link;
-	}
-}
+// add_filter( 'post_type_link', 'my_post_type_link', 1, 2 );
+// function my_post_type_link( $link, $post ){
+// 	if ( 'live' === $post->post_type ) {
+// 		return home_url( '/live/' . $post->ID );
+// 	} else if ( 'video' === $post->post_type ) {
+// 		return home_url( '/video/' . $post->ID );
+// 	} else if ( 'discography' === $post->post_type ) {
+// 		return home_url( '/discography/' . $post->ID );
+// 	} else {
+// 		return $link;
+// 	}
+// }
 
-add_filter( 'rewrite_rules_array', 'my_rewrite_rules_array' );
-function my_rewrite_rules_array( $rules ) {
-	$new_rules = array( 
-		'live/([0-9]+)/?$' => 'index.php?post_type=live&p=$matches[1]',
-		'video/([0-9]+)/?$' => 'index.php?post_type=video&p=$matches[1]',
-		'discography/([0-9]+)/?$' => 'index.php?post_type=discography&p=$matches[1]',
-		'with_front' => false,
-	);
-	return $new_rules + $rules;
-}
+// add_filter( 'rewrite_rules_array', 'my_rewrite_rules_array' );
+// function my_rewrite_rules_array( $rules ) {
+// 	$new_rules = array( 
+// 		'live/([0-9]+)/?$' => 'index.php?post_type=live&p=$matches[1]',
+// 		'video/([0-9]+)/?$' => 'index.php?post_type=video&p=$matches[1]',
+// 		'discography/([0-9]+)/?$' => 'index.php?post_type=discography&p=$matches[1]',
+// 		'with_front' => false,
+// 	);
+// 	return $new_rules + $rules;
+// }
 
 	/*
 	for more information on taxonomies, go here:

@@ -33,6 +33,15 @@ gulp.task( 'sass', function() {
         .pipe(gulp.dest(dir.theme + '/library/css'))
         .pipe(browserSync.reload({stream: true}));
 });
+
+gulp.task('cssmin', function () {
+    gulp.src(dir.theme + '/library/css/style.css')
+        .pipe(cssmin())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest(dir.theme + '/library/css/'));
+});
  
 // WordPress データベースのエクスポート
 gulp.task( 'wp_export', shell.task(
@@ -63,4 +72,8 @@ gulp.task('watch', ['browser-sync', 'sass'], function () {
     gulp.watch(dir.theme + '/library/scss/**/*.scss', ['sass']);
     gulp.watch(dir.theme + '/library/js/*.js', ['bs-reload']);
     gulp.watch(dir.theme + '/*.php', ['bs-reload']);
+});
+
+gulp.task('watch-sass', ['sass'], function () {
+    gulp.watch(dir.theme + '/library/scss/**/*.scss', ['sass', 'cssmin']);
 });

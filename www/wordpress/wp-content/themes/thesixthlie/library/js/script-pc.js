@@ -5,12 +5,20 @@
 (function($) {
 
 jQuery(document).ready(function($) {
+  jQuery("body").removeClass( 'fade-body' );
   if(is_home) {
-    jQuery('.welcome').css({
-      'height': viewport.height
-    });
+    if( viewport.height < viewport.width * 920 / 1280 ) {
+      jQuery('.welcome').css({
+        'height': viewport.height
+      });
+    } else {
+      jQuery('.welcome').css({
+        'height': viewport.width * 920 / 1280 - 1
+      });
+    }
     jQuery('.welcome section').css({
-      'bottom': viewport.height / 3
+      // 'bottom': viewport.height / 3
+      'bottom': '150px'
     });
   }
   jQuery('.wp-calendar tbody td a').hover(
@@ -31,7 +39,11 @@ jQuery(document).ready(function($) {
 
   jQuery( '.plz-scroll' ).click(function() {
     /* Act on the event */
-    jQuery('html, body').animate({scrollTop: viewport.height}, 800);
+    if( viewport.height < viewport.width * 920 / 1280 ) {
+      jQuery('html, body').animate({scrollTop: viewport.height}, 800);
+    } else {
+      jQuery('html, body').animate({scrollTop: viewport.width * 920 / 1280 - 1}, 800);
+    }
   });
 
 }); /* end of as page load scripts */ 
